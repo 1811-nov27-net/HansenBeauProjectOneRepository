@@ -1,0 +1,130 @@
+CREATE DATABASE ItaDPizza
+
+CREATE SCHEMA PO
+
+
+
+CREATE TABLE PO.Customer
+(
+	CustomerID INT IDENTITY NOT NULL,
+	FirstName NVARCHAR(100) NOT NULL,
+	LastName NVARCHAR(100) NOT NULL,
+	DefaultAddressID INT NOT NULL
+	CONSTRAINT PK_User_CustomerID PRIMARY KEY (CustomerID)
+)
+
+CREATE TABLE PO.Address
+(
+	AddressID INT IDENTITY NOT NULL,
+	AddressLine1 NVARCHAR(100) NOT NULL,
+	AddressLine2 NVARCHAR(100) NULL,
+	City NVARCHAR(100) NOT NULL,
+	State NVARCHAR(50) NOT NULL,
+	ZIP INT NOT NULL,
+	CustomerID INT NOT NULL
+	CONSTRAINT PK_Address_AddressID PRIMARY KEY (AddressID)
+)
+
+
+
+CREATE TABLE PO.OrderHeader
+(
+	OrderID INT IDENTITY NOT NULL,
+	CustomerID INT NOT NULL,
+	StoreID INT NOT NULL,
+	AddressID INT NOT NULL,
+	TotalCost DECIMAL NOT NULL,
+	OrderData DATETIME2 NOT NULL
+	CONSTRAINT PK_OrderHeader_OrderID PRIMARY KEY (OrderID)
+)
+
+
+CREATE TABLE PO.OrderDetail
+(
+	OrderDetailID INT IDENTITY NOT NULL,
+	OrderID INT NOT NULL,
+	ProductID INT NOT NULL,
+	QtyOrdered INT DEFAULT(0) NOT NULL
+	CONSTRAINT PK_OrderDetail_OrderDetailID PRIMARY KEY (OrderDetailID)
+)
+
+CREATE TABLE PO.Product
+(
+	ProductID INT IDENTITY NOT NULL,
+	ProductName NVARCHAR(100) DEFAULT('Custom Pizza') NOT NULL,
+	UnitPrice DECIMAL NOT NULL
+	CONSTRAINT PK_Product_ProductID PRIMARY KEY (ProductID)
+)
+
+CREATE TABLE PO.ProductRecipe
+(
+	ProductRecipeID INT IDENTITY NOT NULL,
+	IngredientID INT NOT NULL,
+	ProductID INT NOT NULL,
+	ProductQty INT DEFAULT(0) NOT NULL
+	CONSTRAINT PK_ProductRecipe_ProductRecipe PRIMARY KEY (ProductRecipeID)
+)
+
+CREATE TABLE PO.Ingredient
+(
+	IngredientID INT IDENTITY NOT NULL,
+	IngredientName NVARCHAR(100) NOT NULL,
+	IngredientPrice DECIMAL DEFAULT(1.00) NOT NULL
+	CONSTRAINT PK_Ingredient_IngredientID PRIMARY KEY (IngredientID)
+)
+
+CREATE TABLE PO.Inventory
+(
+	InventoryID INT IDENTITY NOT NULL,
+	IngredientID INT NOT NULL,
+	StoreID INT NOT NULL,
+	QtyRemaining INT NOT NULL
+	CONSTRAINT PK_Inventory_InventoryID PRIMARY KEY (InventoryID)
+)
+
+CREATE TABLE PO.Store
+(
+	StoreID INT IDENTITY NOT NULL,
+	AddressLine1 NVARCHAR(100) NOT NULL,
+	AddressLine2 NVARCHAR(100) NULL,
+	City NVARCHAR(100) NOT NULL,
+	State NVARCHAR(50) NOT NULL,
+	ZIP INT NOT NULL
+	CONSTRAINT PK_Store_StoreID PRIMARY KEY (StoreID)
+)
+
+ALTER TABLE PO.Address
+	ADD CONSTRAINT FK_Address_Customer_CustomerID  FOREIGN KEY (CustomerID) REFERENCES PO.Customer(CustomerID)
+
+ALTER TABLE PO.OrderHeader
+	ADD CONSTRAINT FK_OrderHeader_Customer_CustomerID FOREIGN KEY (CustomerID) REFERENCES PO.Customer(CustomerID)
+ALTER TABLE PO.OrderHeader
+	ADD CONSTRAINT FK_OrderHeader_Address_AddresssID FOREIGN KEY (AddressID) REFERENCES PO.Address(AddressID)
+ALTER TABLE PO.OrderHeader
+	ADD CONSTRAINT FK_OrderHeader_Store_StoreID FOREIGN KEY (StoreID) REFERENCES PO.Store(StoreID)
+
+ALTER TABLE PO.OrderDetail
+	ADD CONSTRAINT FK_OrderDetail_OrderHeader_OrderID FOREIGN KEY (OrderID) REFERENCES PO.OrderHeader(OrderID)
+ALTER TABLE PO.OrderDetail
+	ADD CONSTRAINT FK_OrderDetail_Product_ProductID FOREIGN KEY (ProductID) REFERENCES PO.Product(ProductID)
+
+ALTER TABLE PO.ProductRecipe
+	ADD CONSTRAINT FK_ProductRecipe_Product_ProductID FOREIGN KEY (ProductID) REFERENCES PO.Product(ProductID)
+ALTER TABLE PO.ProductRecipe
+	ADD CONSTRAINT FK_ProductRecipe_Ingredient_IngredientID FOREIGN KEY (IngredientID) REFERENCES PO.Ingredient(IngredientID)
+
+ALTER TABLE PO.Inventory
+	ADD CONSTRAINT FK_Inventory_Ingredient_IngredientID FOREIGN KEY (IngredientID) REFERENCES PO.Ingredient(IngredientID)
+ALTER TABLE PO.Inventory
+	ADD CONSTRAINT FK_Inventory_Store_StoreID FOREIGN KEY (StoreID) REFERENCES PO.Store(StoreID)
+
+
+SELECT * FROM PO.Customer
+SELECT * FROM PO.Address
+SELECT * FROM PO.OrderHeader
+SELECT * FROM PO.OrderDetail
+SELECT * FROM PO.Product
+SELECT * FROM PO.ProductRecipe
+SELECT * FROM PO.Ingredient
+SELECT * FROM PO.Inventory
+SELECT * FROM PO.Store
