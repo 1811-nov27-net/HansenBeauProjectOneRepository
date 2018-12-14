@@ -5,11 +5,6 @@ namespace ProjectOne.DataAccess
 {
     public partial class Address
     {
-        public Address()
-        {
-            OrderHeader = new HashSet<OrderHeader>();
-        }
-
         public int AddressId { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
@@ -19,6 +14,5 @@ namespace ProjectOne.DataAccess
         public int CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }
-        public virtual ICollection<OrderHeader> OrderHeader { get; set; }
     }
 }

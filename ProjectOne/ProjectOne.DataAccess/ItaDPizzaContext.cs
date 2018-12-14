@@ -29,6 +29,8 @@ namespace ProjectOne.DataAccess
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=tcp:hansen1811.database.windows.net,1433;Initial Catalog=ItaDPizza;Persist Security Info=False;User ID=beauadmin;Password=1404Sql!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
             }
         }
 
@@ -62,8 +64,7 @@ namespace ProjectOne.DataAccess
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Address)
-                    .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .HasForeignKey(d => d.CustomerId);
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -115,8 +116,7 @@ namespace ProjectOne.DataAccess
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Inventory)
-                    .HasForeignKey(d => d.StoreId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .HasForeignKey(d => d.StoreId);
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -131,8 +131,7 @@ namespace ProjectOne.DataAccess
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .HasForeignKey(d => d.OrderId);
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderDetail)
@@ -149,6 +148,10 @@ namespace ProjectOne.DataAccess
 
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
+                entity.Property(e => e.Active)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.AddressId).HasColumnName("AddressID");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
@@ -156,22 +159,6 @@ namespace ProjectOne.DataAccess
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
                 entity.Property(e => e.TotalCost).HasColumnType("decimal(18, 0)");
-
-                entity.HasOne(d => d.Address)
-                    .WithMany(p => p.OrderHeader)
-                    .HasForeignKey(d => d.AddressId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderHeader_Address_AddresssID");
-
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.OrderHeader)
-                    .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-
-                entity.HasOne(d => d.Store)
-                    .WithMany(p => p.OrderHeader)
-                    .HasForeignKey(d => d.StoreId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Product>(entity =>

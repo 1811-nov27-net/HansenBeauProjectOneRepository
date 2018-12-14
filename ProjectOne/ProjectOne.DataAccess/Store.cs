@@ -8,7 +8,6 @@ namespace ProjectOne.DataAccess
         public Store()
         {
             Inventory = new HashSet<Inventory>();
-            OrderHeader = new HashSet<OrderHeader>();
         }
 
         public int StoreId { get; set; }
@@ -19,6 +18,5 @@ namespace ProjectOne.DataAccess
         public int Zip { get; set; }
 
         public virtual ICollection<Inventory> Inventory { get; set; }
-        public virtual ICollection<OrderHeader> OrderHeader { get; set; }
     }
 }

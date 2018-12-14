@@ -230,6 +230,12 @@ namespace ProjectOne.Repository
             return orderProducts;
         }
 
+        public Product GetProductByID(int productId)
+        {
+            IEnumerable<Product> productCollection = ManualMapper.ManMap(_db.Product);
+            return productCollection.Where(p => p.ProductID == productId).First();
+        }
+
         public IEnumerable<Store> GetStores()
         {
             return ManualMapper.ManMap(_db.Store);
@@ -383,13 +389,6 @@ namespace ProjectOne.Repository
             }
             List<Models.Customer> collectionModelCustomers = ManualMapper.ManMap(collectionDACustomers);
             return collectionModelCustomers;
-        }
-        //for some reason, it wants me to explicitly write IRepository.GetProductById() for
-        // this method... IDK why...
-        Product GetProductByID(int productId)
-        {
-            IEnumerable<Product> productCollection = ManualMapper.ManMap(_db.Product);
-            return productCollection.Where(p => p.ProductID == productId).First();
-        }
+        }      
     }
 }
