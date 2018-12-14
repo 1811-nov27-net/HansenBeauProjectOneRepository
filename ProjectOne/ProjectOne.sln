@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectOne", "ProjectOne\ProjectOne.csproj", "{CB096F93-2AC5-46DA-9BD7-1085E86F9CDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectOne", "ProjectOne\ProjectOne.csproj", "{CB096F93-2AC5-46DA-9BD7-1085E86F9CDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectOne.DataAccess", "ProjectOne.DataAccess\ProjectOne.DataAccess.csproj", "{0E94DE51-615D-4B5B-814C-92FFC3BE3D1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectOne.DataAccess", "ProjectOne.DataAccess\ProjectOne.DataAccess.csproj", "{0E94DE51-615D-4B5B-814C-92FFC3BE3D1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectOne.Tests", "ProjectOne.Tests\ProjectOne.Tests.csproj", "{9AD1AB3D-9D03-4A1A-8D6B-06A92431C5B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0E94DE51-615D-4B5B-814C-92FFC3BE3D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E94DE51-615D-4B5B-814C-92FFC3BE3D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E94DE51-615D-4B5B-814C-92FFC3BE3D1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD1AB3D-9D03-4A1A-8D6B-06A92431C5B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AD1AB3D-9D03-4A1A-8D6B-06A92431C5B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AD1AB3D-9D03-4A1A-8D6B-06A92431C5B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AD1AB3D-9D03-4A1A-8D6B-06A92431C5B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

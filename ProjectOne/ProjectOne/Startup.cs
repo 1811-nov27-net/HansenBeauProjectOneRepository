@@ -33,6 +33,34 @@ namespace ProjectOne
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // configures AutoMapper at start-up
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<DataAccess.Customer, Models.Customer>();
+                cfg.CreateMap<DataAccess.Address, Models.Address>();
+                cfg.CreateMap<DataAccess.OrderHeader, Models.OrderHeader>();
+                cfg.CreateMap<DataAccess.OrderDetail, Models.OrderDetail>();
+                cfg.CreateMap<DataAccess.Product, Models.Product>();
+                cfg.CreateMap<DataAccess.ProductRecipe, Models.ProductRecipe>();
+                cfg.CreateMap<DataAccess.Ingredient, Models.Ingredient>();
+                cfg.CreateMap<DataAccess.Inventory, Models.Inventory>();
+                cfg.CreateMap<DataAccess.Store, Models.Store>();
+
+                cfg.CreateMap<Models.Customer, DataAccess.Customer>();
+                cfg.CreateMap<Models.Address, DataAccess.Address>();
+                cfg.CreateMap<Models.OrderHeader, DataAccess.OrderHeader>();
+                cfg.CreateMap<Models.OrderDetail, DataAccess.OrderDetail>();
+                cfg.CreateMap<Models.Product, DataAccess.Product>();
+                cfg.CreateMap<Models.ProductRecipe, DataAccess.ProductRecipe>();
+                cfg.CreateMap<Models.Ingredient, DataAccess.Ingredient>();
+                cfg.CreateMap<Models.Inventory, DataAccess.Inventory>();
+                cfg.CreateMap<Models.Store, DataAccess.Store>();
+            });
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
