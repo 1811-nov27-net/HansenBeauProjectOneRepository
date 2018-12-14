@@ -34,6 +34,8 @@ namespace ProjectOne
             CreateMap<Models.Ingredient, DataAccess.Ingredient>();
             CreateMap<Models.Inventory, DataAccess.Inventory>();
             CreateMap<Models.Store, DataAccess.Store>();
+
+            //CreateMap <IEnumerable<DataAccess.Address>, IEnumerable<Models.Address>>();
         }
     }
 }

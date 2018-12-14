@@ -15,6 +15,7 @@ namespace ProjectOne.DataAccess
         public int StoreId { get; set; }
         public int AddressId { get; set; }
         public decimal TotalCost { get; set; }
+        // fix this typo if you have time
         public DateTime OrderData { get; set; }
 
         public virtual Address Address { get; set; }

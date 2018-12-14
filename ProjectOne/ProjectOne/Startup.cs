@@ -57,7 +57,7 @@ namespace ProjectOne
                 cfg.CreateMap<Models.Inventory, DataAccess.Inventory>();
                 cfg.CreateMap<Models.Store, DataAccess.Store>();
             });
-            var mapper = config.CreateMapper();
+            AutoMapper.IMapper mapper = config.CreateMapper();
             services.AddSingleton(mapper);
             services.AddMvc();
 
