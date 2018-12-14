@@ -30,7 +30,7 @@ namespace ProjectOne.DataAccess
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:hansen1811.database.windows.net,1433;Initial Catalog=ItaDPizza;Persist Security Info=False;User ID=beauadmin;Password=1404Sql!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
+                optionsBuilder.UseSqlServer("Server=tcp:hansen1811.database.windows.net,1433;Initial Catalog=ItaDPizza;Persist Security Info=False;User ID=beauadmin;Password=number10tenSQL!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
             }
         }
 
@@ -159,6 +159,22 @@ namespace ProjectOne.DataAccess
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
 
                 entity.Property(e => e.TotalCost).HasColumnType("decimal(18, 0)");
+
+                entity.HasOne(d => d.Address)
+                    .WithMany(p => p.OrderHeader)
+                    .HasForeignKey(d => d.AddressId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderHeader_Address_AddresssID");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.OrderHeader)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.OrderHeader)
+                    .HasForeignKey(d => d.StoreId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Product>(entity =>

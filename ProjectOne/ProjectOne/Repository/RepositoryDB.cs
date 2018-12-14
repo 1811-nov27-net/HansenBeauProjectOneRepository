@@ -27,18 +27,9 @@ namespace ProjectOne.Repository
         /// <param name="Id"></param>
         public void DeleteAddress(int Id)
         {
-            var address = _db.Address.Include(a => a.OrderHeader).ThenInclude(oh => oh.OrderDetail).First(a => a.AddressId == Id);
+            // Database configured so the all OrderHeaders with corresponding addressID are changed to inactive
+            var address = _db.Address.First(a => a.AddressId == Id);
             _db.Remove(address);
-            foreach (var item in address.OrderHeader)
-            {
-                _db.Remove(item);
-            }
-            // figure this out
-            //foreach (var item in oh.OrderDetail)
-            //{
-            //    _db.Remove(item);
-            //}
-            _db.SaveChanges();
         }
 
         // perhaps amend so that this method called DeleteOrderHeader method, cascading the deletion of order details as well
@@ -249,9 +240,9 @@ namespace ProjectOne.Repository
 
         public void InsertCustomer(Customer customer)
         {
-            _db.Customer.Include(c => c.OrderHeader);
-            _db.Customer.Include(c => c.Address);
-            _db.Add(ManualMapper.ManMap(customer));
+            //_db.Customer.Include(c => c.OrderHeader);
+            //_db.Customer.Include(c => c.Address);
+            //_db.Add(ManualMapper.ManMap(customer));
             _db.SaveChanges();
         }
 
@@ -299,7 +290,7 @@ namespace ProjectOne.Repository
         public void InsertStore(Store store)
         {
             _db.Store.Include(s => s.Inventory);
-            _db.Store.Include(s => s.OrderHeader);
+           // _db.Store.Include(s => s.OrderHeader);
             _db.Add(ManualMapper.ManMap(store));
             _db.SaveChanges();
         }

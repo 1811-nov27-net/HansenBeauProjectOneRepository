@@ -1,5 +1,5 @@
 CREATE DATABASE ItaDPizza
-
+DROP DATABASE ItaDPizza
 CREATE SCHEMA PO
 
 
@@ -56,14 +56,12 @@ CREATE TABLE PO.Product
 	CONSTRAINT PK_Product_ProductID PRIMARY KEY (ProductID)
 )
 
-DROP TABLE PO.ProductRecipe
-
 CREATE TABLE PO.ProductRecipe
 (
 	ProductRecipeID INT IDENTITY NOT NULL,
 	IngredientID INT NOT NULL,
 	ProductID INT NOT NULL,
-	IngredientQty INT DEFAULT(0) NOT NULL
+	ProductQty INT DEFAULT(0) NOT NULL
 	CONSTRAINT PK_ProductRecipe_ProductRecipe PRIMARY KEY (ProductRecipeID)
 )
 

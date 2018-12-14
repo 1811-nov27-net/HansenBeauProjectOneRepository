@@ -8,6 +8,7 @@ namespace ProjectOne.DataAccess
         public Customer()
         {
             Address = new HashSet<Address>();
+            OrderHeader = new HashSet<OrderHeader>();
         }
 
         public int CustomerId { get; set; }
@@ -16,5 +17,6 @@ namespace ProjectOne.DataAccess
         public int DefaultAddressId { get; set; }
 
         public virtual ICollection<Address> Address { get; set; }
+        public virtual ICollection<OrderHeader> OrderHeader { get; set; }
     }
 }

@@ -110,19 +110,21 @@ namespace ProjectOne
         {
             OrderID = orderHeader.OrderId,
             CustomerID = orderHeader.CustomerId,
-            OrderDate = orderHeader.OrderData,
+            OrderDate = orderHeader.OrderDate,
             AddressID = orderHeader.AddressId,
             StoreID = orderHeader.StoreId,
-            TotalCost = orderHeader.TotalCost
+            TotalCost = orderHeader.TotalCost,
+            Active = orderHeader.Active
         };
         public static DA.OrderHeader ManMap(Models.OrderHeader orderHeader) => new DA.OrderHeader
         {
             OrderId = orderHeader.OrderID,
             CustomerId = orderHeader.CustomerID,
-            OrderData = orderHeader.OrderDate,
+            OrderDate = orderHeader.OrderDate,
             AddressId = orderHeader.AddressID,
             StoreId = orderHeader.StoreID,
-            TotalCost = orderHeader.TotalCost
+            TotalCost = orderHeader.TotalCost,
+            Active = orderHeader.Active 
         };
         public static IEnumerable<Models.OrderHeader> ManMap(IEnumerable<DA.OrderHeader> orderHeader) => orderHeader.Select(ManMap);
         public static IEnumerable<DA.OrderHeader> ManMap(IEnumerable<Models.OrderHeader> orderHeader) => orderHeader.Select(ManMap);

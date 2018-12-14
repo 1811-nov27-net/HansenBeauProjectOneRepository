@@ -19,6 +19,9 @@ namespace ProjectOne.Models
 
         public DateTime OrderDate { get; set; }
 
+        public bool? Active { get; set; }
+
+
 
         // navigation property for Model.OrderDetail
         public List<OrderDetail> OrderDetail { get; set; } = new List<OrderDetail>();

@@ -18,6 +18,9 @@ namespace ProjectOne.DataAccess
         public DateTime OrderDate { get; set; }
         public bool? Active { get; set; }
 
+        public virtual Address Address { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual Store Store { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }
