@@ -28,8 +28,9 @@ namespace ProjectOne.Repository
         public void DeleteAddress(int Id)
         {
             // Database configured so the all OrderHeaders with corresponding addressID are changed to inactive
-            var address = _db.Address.First(a => a.AddressId == Id);
+            var address = _db.Address.Where(a => a.AddressId == Id).First();
             _db.Remove(address);
+            _db.SaveChanges();
         }
 
         // perhaps amend so that this method called DeleteOrderHeader method, cascading the deletion of order details as well
@@ -37,25 +38,20 @@ namespace ProjectOne.Repository
         {
             var customer = _db.Customer.Where(c => c.CustomerId == Id).First();
             _db.Remove(customer);
-            DeleteAddress(Id);
-            DeleteOrderHeader(Id);
+            _db.SaveChanges();
         }
 
         public void DeleteIngredient(int Id)
         {
-            var ingredient = _db.Ingredient.Include(i => i.Inventory).Where(i => i.IngredientId == Id).First();
+            var ingredient = _db.Ingredient.Where(i => i.IngredientId == Id).First();
             _db.Remove(ingredient);
-            foreach (var item in ingredient.Inventory)
-            {
-                _db.Remove(item);
-            }
             _db.SaveChanges();
         }
 
         // Likely I will never use this because inventory entries will only be deleted when store entries are deleted or when ingredient entries are deleted
         public void DeleteInventory(int Id)
         {
-            var inventory = _db.Address.Where(a => a.AddressId == Id).First();
+            var inventory = _db.Inventory.Where(i => i.InventoryId == Id).First();
             _db.Remove(inventory);
             _db.SaveChanges();
         }
@@ -73,31 +69,28 @@ namespace ProjectOne.Repository
         {
             var orderHeader = _db.OrderHeader.Where(oh => oh.OrderId == Id).First();
             _db.Remove(orderHeader);
-            DeleteOrderDetail(Id);
-            // this SaveChanges() method is not needed because DeleteOrderDetail(Id) would save the changes
-            // _db.SaveChanges();
+            _db.SaveChanges();
         }
 
         public void DeleteProduct(int Id)
         {
             var product = _db.Product.Where(p => p.ProductId == Id).First();
                 _db.Remove(product);
-            DeleteProductRecipe(Id);
-            DeleteOrderDetail(Id);
+            _db.SaveChanges();
         }
 
         public void DeleteProductRecipe(int Id)
         {
             var productRecipe = _db.ProductRecipe.Where(pr => pr.ProductRecipeId == Id).First();
             _db.Remove(productRecipe);
+            _db.SaveChanges();
         }
 
         public void DeleteStore(int Id)
         {
             var store = _db.Store.Where(s => s.StoreId == Id).First();
             _db.Remove(store);
-            DeleteInventory(Id);
-            DeleteOrderHeader(Id);
+            _db.SaveChanges();
         }
 
 
