@@ -63,11 +63,6 @@ namespace ProjectOne.Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Customer> GetCustomers(int Id, params string[] names)
-        {
-            throw new NotImplementedException();
-        }
-
         public void GetDetailsOfOrder(int id)
         {
             throw new NotImplementedException();
@@ -122,6 +117,8 @@ namespace ProjectOne.Repository
         {
             throw new NotImplementedException();
         }
+
+
 
         public IEnumerable<ProductRecipe> GetProductRecipes()
         {
@@ -234,6 +231,16 @@ namespace ProjectOne.Repository
         }
 
         public void UpdateStore(Store store)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<Customer> IRepository.GetCustomers(params string[] names)
+        {
+            throw new NotImplementedException();
+        }
+
+        Product IRepository.GetProductByID(int productId)
         {
             throw new NotImplementedException();
         }

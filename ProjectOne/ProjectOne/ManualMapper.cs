@@ -49,6 +49,8 @@ namespace ProjectOne
         };
         public static IEnumerable<Models.Customer> ManMap(IEnumerable<DA.Customer> customer) => customer.Select(ManMap);
         public static IEnumerable<DA.Customer> ManMap(IEnumerable<Models.Customer> customer) => customer.Select(ManMap);
+        public static List<Models.Customer> ManMap(List<DA.Customer> customer) => customer.Select(ManMap).ToList();
+        public static List<DA.Customer> ManMap(List<Models.Customer> customer) => customer.Select(ManMap).ToList();
 
         // All ingredient mappings
         public static Models.Ingredient ManMap(DA.Ingredient ingredient) => new Models.Ingredient

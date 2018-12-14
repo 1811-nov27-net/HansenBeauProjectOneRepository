@@ -55,13 +55,12 @@ namespace ProjectOne.Repository
 
         // Functionality Methods
         // Customer
-        IEnumerable<Models.Customer> GetCustomers(int Id, params string[] names);
+        List<Models.Customer> GetCustomers(params string[] names);
 
         // Address
 
         // OrderHeader
         Models.OrderHeader SuggestOrder();
-        void GetDetailsOfOrder(int id);
         IEnumerable<Models.Product> GetProductsOfOrderByID(int id);
         Models.OrderHeader GetOrderByOrderId(int orderID);
         IEnumerable<Models.OrderHeader> GetOrderHistoryAddress(int address);
@@ -73,6 +72,7 @@ namespace ProjectOne.Repository
         // OrderDetail
 
         // Product
+        Models.Product GetProductByID(int productId);
 
         // ProductRecipe
 
