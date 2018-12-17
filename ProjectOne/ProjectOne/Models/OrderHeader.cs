@@ -21,9 +21,6 @@ namespace ProjectOne.Models
 
         public bool? Active { get; set; }
 
-
-
-        // navigation property for Model.OrderDetail
         public List<OrderDetail> OrderDetail { get; set; } = new List<OrderDetail>();
     }
 }

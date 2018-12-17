@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectOne.DataAccess;
+using ProjectOne.Repository;
 
 namespace ProjectOne
 {
@@ -31,35 +34,39 @@ namespace ProjectOne
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddScoped<IRepository, RepositoryDB>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            // configures AutoMapper at start-up
-            var config = new AutoMapper.MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<DataAccess.Customer, Models.Customer>();
-                cfg.CreateMap<DataAccess.Address, Models.Address>();
-                cfg.CreateMap<DataAccess.OrderHeader, Models.OrderHeader>();
-                cfg.CreateMap<DataAccess.OrderDetail, Models.OrderDetail>();
-                cfg.CreateMap<DataAccess.Product, Models.Product>();
-                cfg.CreateMap<DataAccess.ProductRecipe, Models.ProductRecipe>();
-                cfg.CreateMap<DataAccess.Ingredient, Models.Ingredient>();
-                cfg.CreateMap<DataAccess.Inventory, Models.Inventory>();
-                cfg.CreateMap<DataAccess.Store, Models.Store>();
+            services.AddDbContext<ItaDPizzaContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("CSAlias")));
 
-                cfg.CreateMap<Models.Customer, DataAccess.Customer>();
-                cfg.CreateMap<Models.Address, DataAccess.Address>();
-                cfg.CreateMap<Models.OrderHeader, DataAccess.OrderHeader>();
-                cfg.CreateMap<Models.OrderDetail, DataAccess.OrderDetail>();
-                cfg.CreateMap<Models.Product, DataAccess.Product>();
-                cfg.CreateMap<Models.ProductRecipe, DataAccess.ProductRecipe>();
-                cfg.CreateMap<Models.Ingredient, DataAccess.Ingredient>();
-                cfg.CreateMap<Models.Inventory, DataAccess.Inventory>();
-                cfg.CreateMap<Models.Store, DataAccess.Store>();
-            });
-            AutoMapper.IMapper mapper = config.CreateMapper();
-            services.AddSingleton(mapper);
-            services.AddMvc();
+            // configures AutoMapper at start-up
+            //var config = new AutoMapper.MapperConfiguration(cfg =>
+            //{
+            //    cfg.CreateMap<DataAccess.Customer, Library.Customer>();
+            //    cfg.CreateMap<DataAccess.Address, Library.Address>();
+            //    cfg.CreateMap<DataAccess.OrderHeader, Library.OrderHeader>();
+            //    cfg.CreateMap<DataAccess.OrderDetail, Library.OrderDetail>();
+            //    cfg.CreateMap<DataAccess.Product, Library.Product>();
+            //    cfg.CreateMap<DataAccess.ProductRecipe, Library.ProductRecipe>();
+            //    cfg.CreateMap<DataAccess.Ingredient, Library.Ingredient>();
+            //    cfg.CreateMap<DataAccess.Inventory, Library.Inventory>();
+            //    cfg.CreateMap<DataAccess.Store, Library.Store>();
+
+            //    cfg.CreateMap<Library.Customer, DataAccess.Customer>();
+            //    cfg.CreateMap<Library.Address, DataAccess.Address>();
+            //    cfg.CreateMap<Library.OrderHeader, DataAccess.OrderHeader>();
+            //    cfg.CreateMap<Library.OrderDetail, DataAccess.OrderDetail>();
+            //    cfg.CreateMap<Library.Product, DataAccess.Product>();
+            //    cfg.CreateMap<Library.ProductRecipe, DataAccess.ProductRecipe>();
+            //    cfg.CreateMap<Library.Ingredient, DataAccess.Ingredient>();
+            //    cfg.CreateMap<Library.Inventory, DataAccess.Inventory>();
+            //    cfg.CreateMap<Library.Store, DataAccess.Store>();
+            //});
+            //AutoMapper.IMapper mapper = config.CreateMapper();
+            //services.AddSingleton(mapper);
+            //services.AddMvc();
 
         }
 
@@ -82,7 +89,7 @@ namespace ProjectOne
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
-            {
+            {            
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

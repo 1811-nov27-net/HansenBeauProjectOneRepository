@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using ProjectOne.Models;
+using ProjectOne.Library;
 using DA = ProjectOne.DataAccess;
 using ProjectOne;
 using Microsoft.EntityFrameworkCore;
@@ -34,11 +34,21 @@ namespace ProjectOne.Repository
         }
 
         // perhaps amend so that this method called DeleteOrderHeader method, cascading the deletion of order details as well
-        public void DeleteCustomer(int Id)
+        // returning a boolean value allows us to try to handle exceptions
+        public bool DeleteCustomer(int Id)
         {
-            var customer = _db.Customer.Where(c => c.CustomerId == Id).First();
-            _db.Remove(customer);
-            _db.SaveChanges();
+            bool returnValue = true;
+            try
+            {
+                var customer = _db.Customer.Where(c => c.CustomerId == Id).First();
+                _db.Remove(customer);
+                _db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                returnValue = false;
+            }
+            return returnValue;
         }
 
         public void DeleteIngredient(int Id)
@@ -75,7 +85,7 @@ namespace ProjectOne.Repository
         public void DeleteProduct(int Id)
         {
             var product = _db.Product.Where(p => p.ProductId == Id).First();
-                _db.Remove(product);
+            _db.Remove(product);
             _db.SaveChanges();
         }
 
@@ -100,14 +110,20 @@ namespace ProjectOne.Repository
             return ManualMapper.ManMap(_db.Address);
         }
 
+        public Customer GetCustomerByID(int customerID)
+        {
+            DA.Customer customer = _db.Customer.Where(c => c.CustomerId == customerID).FirstOrDefault();
+            return ManualMapper.ManMap(customer);
+        }
+
         public IEnumerable<Customer> GetCustomers()
         {
             return ManualMapper.ManMap(_db.Customer);
         }
 
-        public List<Models.OrderDetail> GetDetailsOfOrder(int id)
+        public List<Library.OrderDetail> GetDetailsOfOrder(int id)
         {
-            List<Models.OrderDetail> orderDetails = ManualMapper.ManMap(_db.OrderDetail.Where(od => od.OrderId == id)).ToList();
+            List<Library.OrderDetail> orderDetails = ManualMapper.ManMap(_db.OrderDetail.Where(od => od.OrderId == id)).ToList();
             return orderDetails;
         }
 
@@ -183,7 +199,7 @@ namespace ProjectOne.Repository
         public IEnumerable<OrderHeader> GetOrderHistoryCustomer(int user)
         {
             IEnumerable<OrderHeader> orderCollection = ManualMapper.ManMap(_db.OrderHeader);
-            return orderCollection.OrderBy(o => o.OrderDate).Where(o => o.CustomerID == user);
+            return orderCollection.OrderByDescending(o => o.OrderDate).Where(o => o.CustomerID == user);
         }
 
         public IEnumerable<OrderHeader> GetOrderHistoryStore(int store)
@@ -235,7 +251,7 @@ namespace ProjectOne.Repository
         {
             //_db.Customer.Include(c => c.OrderHeader);
             //_db.Customer.Include(c => c.Address);
-            //_db.Add(ManualMapper.ManMap(customer));
+            _db.Add(ManualMapper.ManMap(customer));
             _db.SaveChanges();
         }
 
@@ -259,11 +275,18 @@ namespace ProjectOne.Repository
             _db.SaveChanges();
         }
 
-        public void InsertOrderHeader(OrderHeader orderHeader)
+        public bool InsertOrderHeader(OrderHeader orderHeader)
         {
-            _db.OrderHeader.Include(oh => oh.OrderDetail);
-            _db.Add(ManualMapper.ManMap(orderHeader));
-            _db.SaveChanges();
+            var returnValue = false;
+            IEnumerable<OrderHeader> orderHistory = GetOrderHistoryCustomer(orderHeader.CustomerID).Where(oh => (oh.OrderDate.AddHours(2) > DateTime.Now) && (oh.StoreID == orderHeader.StoreID));
+            if (orderHistory.Count() == 0)
+            {
+                _db.OrderHeader.Include(oh => oh.OrderDetail);
+                _db.Add(ManualMapper.ManMap(orderHeader));
+                _db.SaveChanges();
+                returnValue = true;
+            }
+            return returnValue;
         }
 
         public void InsertProduct(Product product)
@@ -283,14 +306,15 @@ namespace ProjectOne.Repository
         public void InsertStore(Store store)
         {
             _db.Store.Include(s => s.Inventory);
-           // _db.Store.Include(s => s.OrderHeader);
+            _db.Store.Include(s => s.OrderHeader);
             _db.Add(ManualMapper.ManMap(store));
             _db.SaveChanges();
         }
 
-        public OrderHeader SuggestOrder()
+        public OrderHeader SuggestOrder(int customerId)
         {
-            OrderHeader orderSuggest = GetOrderHistory("l").FirstOrDefault();
+            // what if there is no previous order on file?
+            OrderHeader orderSuggest = GetOrderHistoryCustomer(customerId).FirstOrDefault();
             return orderSuggest;
         }
 
@@ -371,8 +395,10 @@ namespace ProjectOne.Repository
                     }
                 }
             }
-            List<Models.Customer> collectionModelCustomers = ManualMapper.ManMap(collectionDACustomers);
+            List<Library.Customer> collectionModelCustomers = ManualMapper.ManMap(collectionDACustomers);
             return collectionModelCustomers;
-        }      
+        }
+
+
     }
 }

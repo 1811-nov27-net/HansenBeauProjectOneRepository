@@ -25,15 +25,6 @@ namespace ProjectOne.DataAccess
         public virtual DbSet<ProductRecipe> ProductRecipe { get; set; }
         public virtual DbSet<Store> Store { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:hansen1811.database.windows.net,1433;Initial Catalog=ItaDPizza;Persist Security Info=False;User ID=beauadmin;Password=number10ten1U2IU8!!sql;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
@@ -72,6 +63,11 @@ namespace ProjectOne.DataAccess
                 entity.ToTable("Customer", "PO");
 
                 entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+
+                entity.Property(e => e.CustomerPassword)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasDefaultValueSql("('password')");
 
                 entity.Property(e => e.DefaultAddressId).HasColumnName("DefaultAddressID");
 

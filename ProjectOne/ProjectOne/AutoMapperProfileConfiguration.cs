@@ -1,41 +1,39 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿//using AutoMapper;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
 
-namespace ProjectOne
-{
-    public class AutoMapperProfileConfiguration : Profile
-    {
-        public AutoMapperProfileConfiguration() 
-            : this("MyProfile")
-        {
-        }
-        protected AutoMapperProfileConfiguration(string profileName)
-            : base(profileName)
-        {
-            CreateMap<DataAccess.Customer, Models.Customer>();
-            CreateMap<DataAccess.Address, Models.Address>();
-            CreateMap<DataAccess.OrderHeader, Models.OrderHeader>();
-            CreateMap<DataAccess.OrderDetail, Models.OrderDetail>();
-            CreateMap<DataAccess.Product, Models.Product>();
-            CreateMap<DataAccess.ProductRecipe, Models.ProductRecipe>();
-            CreateMap<DataAccess.Ingredient, Models.Ingredient>();
-            CreateMap<DataAccess.Inventory, Models.Inventory>();
-            CreateMap<DataAccess.Store, Models.Store>();
+//namespace ProjectOne
+//{
+//    public class AutoMapperProfileConfiguration : Profile
+//    {
+//        public AutoMapperProfileConfiguration() 
+//            : this("MyProfile")
+//        {
+//        }
+//        protected AutoMapperProfileConfiguration(string profileName)
+//            : base(profileName)
+//        {
+//            CreateMap<DataAccess.Customer, Library.Customer>();
+//            CreateMap<DataAccess.Address, Library.Address>();
+//            CreateMap<DataAccess.OrderHeader, Library.OrderHeader>();
+//            CreateMap<DataAccess.OrderDetail, Library.OrderDetail>();
+//            CreateMap<DataAccess.Product, Library.Product>();
+//            CreateMap<DataAccess.ProductRecipe, Library.ProductRecipe>();
+//            CreateMap<DataAccess.Ingredient, Library.Ingredient>();
+//            CreateMap<DataAccess.Inventory, Library.Inventory>();
+//            CreateMap<DataAccess.Store, Library.Store>();
 
-            CreateMap<Models.Customer, DataAccess.Customer>();
-            CreateMap<Models.Address, DataAccess.Address>();
-            CreateMap<Models.OrderHeader, DataAccess.OrderHeader>();
-            CreateMap<Models.OrderDetail, DataAccess.OrderDetail>();
-            CreateMap<Models.Product, DataAccess.Product>();
-            CreateMap<Models.ProductRecipe, DataAccess.ProductRecipe>();
-            CreateMap<Models.Ingredient, DataAccess.Ingredient>();
-            CreateMap<Models.Inventory, DataAccess.Inventory>();
-            CreateMap<Models.Store, DataAccess.Store>();
-
-            //CreateMap <IEnumerable<DataAccess.Address>, IEnumerable<Models.Address>>();
-        }
-    }
-}
+//            CreateMap<Library.Customer, DataAccess.Customer>();
+//            CreateMap<Library.Address, DataAccess.Address>();
+//            CreateMap<Library.OrderHeader, DataAccess.OrderHeader>();
+//            CreateMap<Library.OrderDetail, DataAccess.OrderDetail>();
+//            CreateMap<Library.Product, DataAccess.Product>();
+//            CreateMap<Library.ProductRecipe, DataAccess.ProductRecipe>();
+//            CreateMap<Library.Ingredient, DataAccess.Ingredient>();
+//            CreateMap<Library.Inventory, DataAccess.Inventory>();
+//            CreateMap<Library.Store, DataAccess.Store>();
+//        }
+//    }
+//}

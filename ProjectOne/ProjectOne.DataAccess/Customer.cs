@@ -15,6 +15,7 @@ namespace ProjectOne.DataAccess
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int DefaultAddressId { get; set; }
+        public string CustomerPassword { get; set; }
 
         public virtual ICollection<Address> Address { get; set; }
         public virtual ICollection<OrderHeader> OrderHeader { get; set; }

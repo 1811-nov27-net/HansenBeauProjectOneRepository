@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectOne.Models
 {
     public class Customer
     {
+        [Display(Name = "ID")]
         public int CustomerID { get; set; }
 
+        [Required]
         public string FirstName { get; set; }
 
+        [Required]
         public string LastName { get; set; }
 
-        public int DefaultAddressId { get; set; }
+        public List<Address> Address { get; set; }
 
-        // navigation property for Model.Address
-        public List<Address> Address { get; set; } = new List<Address>();
+        public List<OrderHeader> OrderHeaders { get; set; }
 
-        // navigation property for Model.OrderHeader
-        public List<OrderHeader> OrderHeader { get; set; } = new List<OrderHeader>();
+        public string CustomerPassword { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProjectOne.Models
+namespace ProjectOne.Library
 {
     public class ProductRecipe
     {

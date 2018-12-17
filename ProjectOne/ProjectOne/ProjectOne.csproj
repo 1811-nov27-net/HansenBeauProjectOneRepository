@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>ce587aa5-783b-4fd8-a338-3bc618f0b3e8</UserSecretsId>
   </PropertyGroup>
 
 
@@ -10,11 +11,13 @@
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectOne.DataAccess\ProjectOne.DataAccess.csproj" />
+    <ProjectReference Include="..\ProjectOne.Library\ProjectOne.Library.csproj" />
   </ItemGroup>
 
 </Project>
