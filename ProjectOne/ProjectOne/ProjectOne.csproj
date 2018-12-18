@@ -20,4 +20,9 @@
     <ProjectReference Include="..\ProjectOne.Library\ProjectOne.Library.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+
 </Project>
