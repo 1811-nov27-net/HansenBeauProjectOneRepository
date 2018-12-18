@@ -12,5 +12,7 @@ namespace ProjectOne.Models
         public string ProductName { get; set; }
 
         public decimal UnitPrice { get; set; }
+
+        public int placeHolder { get; set; }
     }
 }

@@ -178,7 +178,8 @@ namespace ProjectOne
             OrderID = orderHeader.OrderID,
             StoreID = orderHeader.StoreID,
             AddressID = orderHeader.AddressID,
-            TotalCost = orderHeader.TotalCost
+            TotalCost = orderHeader.TotalCost,
+            CustomerID = orderHeader.CustomerID
 
         };
         public static Models.OrderHeader ManMap2(Library.OrderHeader orderHeader) => new Models.OrderHeader
@@ -186,7 +187,9 @@ namespace ProjectOne
             OrderID = orderHeader.OrderID,
             StoreID = orderHeader.StoreID,
             AddressID = orderHeader.AddressID,
-            TotalCost = orderHeader.TotalCost
+            TotalCost = orderHeader.TotalCost,
+            CustomerID = orderHeader.CustomerID
+            
 
         };
         public static IEnumerable<Library.OrderHeader> ManMap(IEnumerable<DA.OrderHeader> orderHeader) => orderHeader.Select(ManMap);

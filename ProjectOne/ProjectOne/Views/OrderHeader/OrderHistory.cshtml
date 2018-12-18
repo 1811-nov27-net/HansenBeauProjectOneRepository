@@ -10,11 +10,15 @@
     @Html.ActionLink("Sort By Earliest", "OrderHistory", new { sort = 1 }) |
     @Html.ActionLink("Sort By Latest", "OrderHistory", new { sort = 2 }) |
     @Html.ActionLink("Sort By Cheapest", "OrderHistory", new { sort = 3 }) |
-    @Html.ActionLink("Sort By Most Expensive", "OrderHistory", new { sort = 4 })
+    @Html.ActionLink("Sort By Most Expensive", "OrderHistory", new { sort = 4 }) |
+    
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerID)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderID)
             </th>
@@ -34,6 +38,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.CustomerID)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.OrderID)
             </td>
             <td>
@@ -46,8 +53,8 @@
                 @Html.DisplayFor(modelItem => item.TotalCost)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.OrderID }) |
-                @Html.ActionLink("Resubmit", "Resubmit", new { id = item.OrderID })
+                @Html.ActionLink("Resubmit", "Resubmit", new { id = item.OrderID }) |
+                @Html.ActionLink("Place a New Order", "Index", "Product", new { id = item.CustomerID }, null)
             </td>
         </tr>
 }

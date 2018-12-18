@@ -15,6 +15,8 @@ namespace ProjectOne.Models
 
         public int AddressID { get; set; }
 
+        public int CustomerID { get; set; }
+
         public string StoreName { get; set; }
 
         public decimal TotalCost { get; set; }

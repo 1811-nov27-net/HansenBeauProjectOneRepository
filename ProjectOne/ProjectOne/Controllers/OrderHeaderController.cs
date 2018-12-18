@@ -20,12 +20,35 @@ namespace ProjectOne.Controllers
         }
 
         [Route("Index")]
-        public ActionResult Index([FromForm]string firstName, [FromForm]string lastName, [FromForm]string password)
+        public ActionResult Index([FromForm]string firstName, [FromForm]string lastName, [FromForm]string password, [FromForm]string confirmpassword)
         {
-            bool exists = Repo.VerifyCustomer(firstName, lastName, password);
+            if (confirmpassword == null)
             {
-                if (exists == true)
+                bool exists = Repo.VerifyCustomer(firstName, lastName, password);
                 {
+                    if (exists == true)
+                    {
+                        Library.Customer customer = Repo.SearchCustomerByNameandPassword(firstName, lastName, password);
+                        IEnumerable<Library.OrderHeader> orderHeaderList = Repo.GetOrderHistoryCustomer(customer.CustomerID);
+                        IEnumerable<Models.OrderHeader> orderHeaderModelsList = ManualMapper.ManMap2(orderHeaderList);
+                        return View(orderHeaderModelsList);
+                    }
+                    else
+                    {
+                        return RedirectToAction();
+                    }
+                }
+            }
+            else
+            {
+                if (confirmpassword == password)
+                {
+                    Customer customerToInsert = new Library.Customer();
+                    customerToInsert.FirstName = firstName;
+                    customerToInsert.LastName = lastName;
+                    customerToInsert.CustomerPassword = password;
+                    Repo.InsertCustomer(customerToInsert);
+
                     Library.Customer customer = Repo.SearchCustomerByNameandPassword(firstName, lastName, password);
                     IEnumerable<Library.OrderHeader> orderHeaderList = Repo.GetOrderHistoryCustomer(customer.CustomerID);
                     IEnumerable<Models.OrderHeader> orderHeaderModelsList = ManualMapper.ManMap2(orderHeaderList);
@@ -36,6 +59,7 @@ namespace ProjectOne.Controllers
                     return RedirectToAction();
                 }
             }
+            
         }
 
         [Route("Resubmit")]
@@ -54,6 +78,7 @@ namespace ProjectOne.Controllers
 
         }
 
+        
         public ActionResult OrderHistory(int sort)
         {
             switch (sort)
@@ -110,12 +135,9 @@ namespace ProjectOne.Controllers
             return View("OrderHistory", orderHeaderList11);
         }
 
-        //public ActionResult Details(int id)
+        //public ActionResult Details()
         //{
         //    Models.OrderHeader orderHeader = new Models.OrderHeader();
-        //    var productToAdd = Repo.GetProductByID(id);
-        //    var productMapped = ManualMapper.ManMap2(productToAdd);
-        //    orderHeader.ProductList.Add(productMapped);
         //    return View();
         //}
 
