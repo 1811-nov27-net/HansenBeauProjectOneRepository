@@ -10,20 +10,22 @@ using System.Threading.Tasks;
 namespace ProjectOne.Controllers
 {
     [Route("[controller]")]
-    public class ProductController : Controller
+    public class StoreController : Controller
     {
         public IRepository Repo { get; set; }
 
-        public ProductController(IRepository repo)
+        public StoreController(IRepository repo)
         {
             Repo = repo;
         }
 
+
         [Route("Index")]
         public ActionResult Index()
         {
-            IEnumerable<Models.Product> products = ManualMapper.ManMap2(Repo.GetProducts());
-            return View(products);
+            IEnumerable<Models.Store> customers = ManualMapper.ManMap2(Repo.GetStores());
+            return View(customers);
         }
     }
 }
+

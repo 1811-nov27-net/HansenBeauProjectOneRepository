@@ -56,23 +56,23 @@ namespace ProjectOne
         public static List<Library.Customer> ManMap(List<DA.Customer> customer) => customer.Select(ManMap).ToList();
         public static List<DA.Customer> ManMap(List<Library.Customer> customer) => customer.Select(ManMap).ToList();
         // Library to/from Models
-        public static Models.Customer ManMap2(Library.Customer customer) => new Models.Customer
-        {
-            CustomerID = customer.CustomerID,
-            FirstName = customer.FirstName,
-            LastName = customer.LastName,
-            CustomerPassword = customer.CustomerPassword
-        };
-        public static Library.Customer ManMap2(Models.Customer customer) => new Library.Customer
-        {
-            CustomerID = customer.CustomerID,
-            FirstName = customer.FirstName,
-            LastName = customer.LastName,
-            CustomerPassword = customer.CustomerPassword
-        };
+        //public static Models.Customer ManMap2(Library.Customer customer) => new Models.Customer
+        //{
+        //    CustomerID = customer.CustomerID,
+        //    FirstName = customer.FirstName,
+        //    LastName = customer.LastName,
+        //    CustomerPassword = customer.CustomerPassword
+        //};
+        //public static Library.Customer ManMap2(Models.Customer customer) => new Library.Customer
+        //{
+        //    CustomerID = customer.CustomerID,
+        //    FirstName = customer.FirstName,
+        //    LastName = customer.LastName,
+        //    CustomerPassword = customer.CustomerPassword
+        //};
         // 
-        public static IEnumerable<Library.Customer> ManMap2(IEnumerable<Models.Customer> customer) => customer.Select(ManMap2);
-        public static IEnumerable<Models.Customer> ManMap2(IEnumerable<Library.Customer> customer) => customer.Select(ManMap2);
+        //public static IEnumerable<Library.Customer> ManMap2(IEnumerable<Models.Customer> customer) => customer.Select(ManMap2);
+        //public static IEnumerable<Models.Customer> ManMap2(IEnumerable<Library.Customer> customer) => customer.Select(ManMap2);
 
 
         // All ingredient mappings
@@ -148,30 +148,30 @@ namespace ProjectOne
             TotalCost = orderHeader.TotalCost,
             Active = orderHeader.Active 
         };
-        public static Library.OrderHeader ManMap2(Models.OrderHeader orderHeader) => new Library.OrderHeader
-        {
-            OrderID = orderHeader.OrderID,
-            CustomerID = orderHeader.CustomerID,
-            OrderDate = orderHeader.OrderDate,
-            AddressID = orderHeader.AddressID,
-            StoreID = orderHeader.StoreID,
-            TotalCost = orderHeader.TotalCost,
-            Active = orderHeader.Active
-        };
-        public static Models.OrderHeader ManMap2(Library.OrderHeader orderHeader) => new Models.OrderHeader
-        {
-            OrderID = orderHeader.OrderID,
-            CustomerID = orderHeader.CustomerID,
-            OrderDate = orderHeader.OrderDate,
-            AddressID = orderHeader.AddressID,
-            StoreID = orderHeader.StoreID,
-            TotalCost = orderHeader.TotalCost,
-            Active = orderHeader.Active
-        };
+        //public static Library.OrderHeader ManMap2(Models.OrderHeader orderHeader) => new Library.OrderHeader
+        //{
+        //    OrderID = orderHeader.OrderID,
+        //    CustomerID = orderHeader.CustomerID,
+        //    OrderDate = orderHeader.OrderDate,
+        //    AddressID = orderHeader.AddressID,
+        //    StoreID = orderHeader.StoreID,
+        //    TotalCost = orderHeader.TotalCost,
+        //    Active = orderHeader.Active
+        //};
+        //public static Models.OrderHeader ManMap2(Library.OrderHeader orderHeader) => new Models.OrderHeader
+        //{
+        //    OrderID = orderHeader.OrderID,
+        //    CustomerID = orderHeader.CustomerID,
+        //    OrderDate = orderHeader.OrderDate,
+        //    AddressID = orderHeader.AddressID,
+        //    StoreID = orderHeader.StoreID,
+        //    TotalCost = orderHeader.TotalCost,
+        //    Active = orderHeader.Active
+        //};
         public static IEnumerable<Library.OrderHeader> ManMap(IEnumerable<DA.OrderHeader> orderHeader) => orderHeader.Select(ManMap);
         public static IEnumerable<DA.OrderHeader> ManMap(IEnumerable<Library.OrderHeader> orderHeader) => orderHeader.Select(ManMap);
-        public static IEnumerable<Library.OrderHeader> ManMap2(IEnumerable<Models.OrderHeader> orderHeader) => orderHeader.Select(ManMap2);
-        public static IEnumerable<Models.OrderHeader> ManMap2(IEnumerable<Library.OrderHeader> orderHeader) => orderHeader.Select(ManMap2);
+        //public static IEnumerable<Library.OrderHeader> ManMap2(IEnumerable<Models.OrderHeader> orderHeader) => orderHeader.Select(ManMap2);
+        //public static IEnumerable<Models.OrderHeader> ManMap2(IEnumerable<Library.OrderHeader> orderHeader) => orderHeader.Select(ManMap2);
 
         // All product mappings
         public static Library.Product ManMap(DA.Product product) => new Library.Product

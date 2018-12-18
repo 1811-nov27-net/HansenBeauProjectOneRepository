@@ -17,6 +17,7 @@ namespace ProjectOne.DataAccess
         public string City { get; set; }
         public string State { get; set; }
         public int Zip { get; set; }
+        public string StoreName { get; set; }
 
         public virtual ICollection<Inventory> Inventory { get; set; }
         public virtual ICollection<OrderHeader> OrderHeader { get; set; }

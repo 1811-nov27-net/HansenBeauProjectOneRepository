@@ -13,11 +13,14 @@ namespace ProjectOne.Repository
         IEnumerable<Library.Customer> GetCustomers();
         void UpdateCustomer(Library.Customer customer);
         bool DeleteCustomer(int Id);
+        bool VerifyCustomer(string firstname, string lastname, string password);
+        Customer SearchCustomerByNameandPassword(string firstname, string lastname, string password);
 
         void InsertAddress(Library.Address address);
         IEnumerable<Library.Address> GetAddresses();
         void UpdateAddress(Library.Address address);
         void DeleteAddress(int Id);
+        IEnumerable<string> GetAddressNames();
 
         bool InsertOrderHeader(Library.OrderHeader orderHeader);
         IEnumerable<Library.OrderHeader> GetOrderHeaders();
@@ -26,6 +29,7 @@ namespace ProjectOne.Repository
 
         void InsertOrderDetail(Library.OrderDetail orderDetail);
         IEnumerable<Library.OrderDetail> GetOrderDetails();
+        List<Library.OrderDetail> GetOrderDetailByOrderHeaderID(int orderHeaderId);
         void UpdateOrderDetail(Library.OrderDetail orderDetails);
         void DeleteOrderDetail(int Id);
 
@@ -33,6 +37,7 @@ namespace ProjectOne.Repository
         IEnumerable<Library.Product> GetProducts();
         void UpdateProduct(Library.Product product);
         void DeleteProduct(int Id);
+        IEnumerable<string> GetProductNames();
 
         void InsertProductRecipe(Library.ProductRecipe productRecipe);
         IEnumerable<Library.ProductRecipe> GetProductRecipes();
@@ -54,6 +59,7 @@ namespace ProjectOne.Repository
         IEnumerable<Library.Store> GetStores();
         void UpdateStore(Library.Store store);
         void DeleteStore(int Id);
+        string GetStoreName(int orderID);
 
         // Functionality Methods
         // Customer
@@ -68,7 +74,7 @@ namespace ProjectOne.Repository
         IEnumerable<Library.OrderHeader> GetOrderHistoryAddress(int address);
         IEnumerable<Library.OrderHeader> GetOrderHistoryCustomer(int user);
         IEnumerable<Library.OrderHeader> GetOrderHistoryStore(int store);
-        IEnumerable<Library.OrderHeader> GetOrderHistory(string sortOrder);
+        IEnumerable<Library.OrderHeader> GetOrderHistory(int sortOrder);
         int GetLastOrderOfCustomer(int id);
 
         // OrderDetail

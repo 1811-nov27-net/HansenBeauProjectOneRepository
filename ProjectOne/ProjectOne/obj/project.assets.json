@@ -4740,7 +4740,8 @@
         "dependencies": {
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.EntityFrameworkCore": "2.2.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "2.2.0"
+          "Microsoft.EntityFrameworkCore.SqlServer": "2.2.0",
+          "ProjectOne.Library": "1.0.0"
         },
         "compile": {
           "bin/placeholder/ProjectOne.DataAccess.dll": {}

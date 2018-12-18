@@ -1,16 +1,16 @@
 ﻿@model ProjectOne.Models.OrderHeader
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "CreateNew";
 }
 
-<h1>Create</h1>
+<h1>CreateNew</h1>
 
 <h4>OrderHeader</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="CreateNew">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="OrderID" class="control-label"></label>
@@ -21,21 +21,23 @@
                 <label asp-for="StoreID" class="control-label"></label>
                 <input asp-for="StoreID" class="form-control" />
                 <span asp-validation-for="StoreID" class="text-danger"></span>
-                @* figure out how to arrange the fourth parameter....*@
+                <a asp-controller="Store" asp-action="Index">Add/ change store</a>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoreName" class="control-label"></label>
+                <input asp-for="StoreName" class="form-control" />
+                <span asp-validation-for="StoreName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AddressID" class="control-label"></label>
                 <input asp-for="AddressID" class="form-control" />
                 <span asp-validation-for="AddressID" class="text-danger"></span>
-                @* figure out how to arrange the fourth parameter....*@
-                @*@Html.ActionLink("Change Store", "Index", "Address", new { id = Model.OrderID }, null)*@
+                <a asp-controller="Address" asp-action="Index">Add/ change address</a>
             </div>
             <div class="form-group">
                 <label asp-for="TotalCost" class="control-label"></label>
                 <input asp-for="TotalCost" class="form-control" />
                 <span asp-validation-for="TotalCost" class="text-danger"></span>
-                @* figure out how to arrange the fourth parameter....*@
-                @* @Html.ActionLink("Change Store", "Index", "Product", new { id = Model.OrderID }, null) *@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -48,6 +50,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

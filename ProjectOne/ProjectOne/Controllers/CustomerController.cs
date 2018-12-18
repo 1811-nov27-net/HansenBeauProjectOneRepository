@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjectOne.Repository;
 using System;
 using System.Collections.Generic;
+using DA = ProjectOne.DataAccess;
 using System.Linq;
 using System.Threading.Tasks;
+using ProjectOne.Library;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Http;
 
 namespace ProjectOne.Controllers
 {
+    [Route("[controller]")]
     public class CustomerController : Controller
     {
         public IRepository Repo { get; set; }
@@ -92,5 +95,7 @@ namespace ProjectOne.Controllers
                 return View();
             }
         }
+
+        
     }
 }

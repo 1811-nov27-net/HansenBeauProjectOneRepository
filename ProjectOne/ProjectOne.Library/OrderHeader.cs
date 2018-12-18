@@ -21,6 +21,20 @@ namespace ProjectOne.Library
 
         public bool? Active { get; set; }
 
+        //public string AddressLine1 { get; set; }
+
+        //public string AddressLine2 { get; set; }
+
+        //public string City { get; set; }
+
+        //public string State { get; set; }
+
+        //public int ZipCode { get; set; }
+
+        //public IEnumerable<string> productStrings { get; set; }
+
+        //public string StoreName { get; set; }
+
         public string AddToOrder(Library.Product product)
         {
             string returnString = "Product successfully added to order.";

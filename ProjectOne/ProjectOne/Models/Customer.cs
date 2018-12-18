@@ -8,7 +8,7 @@ namespace ProjectOne.Models
 {
     public class Customer
     {
-        [Display(Name = "ID")]
+        [Display(Name = "Id")]
         public int CustomerID { get; set; }
 
         [Required]
@@ -22,5 +22,7 @@ namespace ProjectOne.Models
         public List<OrderHeader> OrderHeaders { get; set; }
 
         public string CustomerPassword { get; set; }
+
+        public string ConfirmPassword { get; set; }
     }
 }

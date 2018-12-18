@@ -228,6 +228,11 @@ namespace ProjectOne.DataAccess
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.StoreName)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasDefaultValueSql("('ItaDPizza Store')");
+
                 entity.Property(e => e.Zip).HasColumnName("ZIP");
             });
         }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using ProjectOne.Library;
 using DA = ProjectOne.DataAccess;
 using ProjectOne;
@@ -145,7 +144,7 @@ namespace ProjectOne.Repository
 
         public OrderHeader GetOrderByOrderId(int orderID)
         {
-            return ManualMapper.ManMap(_db.OrderHeader.Where(o => o.OrderId == orderID).First());
+            return ManualMapper.ManMap(_db.OrderHeader.Where(o => o.OrderId == orderID).FirstOrDefault());
         }
 
         public IEnumerable<OrderDetail> GetOrderDetails()
@@ -158,24 +157,24 @@ namespace ProjectOne.Repository
             return ManualMapper.ManMap(_db.OrderHeader);
         }
 
-        public IEnumerable<OrderHeader> GetOrderHistory(string sortOrder)
+        public IEnumerable<OrderHeader> GetOrderHistory(int sortOrder)
         {
-            if (sortOrder.ToLower() == "e")
+            if (sortOrder == 1)
             {
                 IEnumerable<OrderHeader> orderHistory = ManualMapper.ManMap(_db.OrderHeader);
                 return orderHistory.OrderBy(o => o.OrderDate);
             }
-            else if (sortOrder.ToLower() == "l")
+            else if (sortOrder == 2)
             {
                 IEnumerable<OrderHeader> orderHistory = ManualMapper.ManMap(_db.OrderHeader);
                 return orderHistory.OrderByDescending(o => o.OrderDate);
             }
-            else if (sortOrder.ToLower() == "c")
+            else if (sortOrder == 3)
             {
                 IEnumerable<OrderHeader> orderHistory = ManualMapper.ManMap(_db.OrderHeader);
                 return orderHistory.OrderBy(o => o.TotalCost);
             }
-            else if (sortOrder.ToLower() == "x")
+            else if (sortOrder == 4)
             {
                 IEnumerable<OrderHeader> orderHistory = ManualMapper.ManMap(_db.OrderHeader);
                 return orderHistory.OrderByDescending(o => o.TotalCost);
@@ -278,14 +277,14 @@ namespace ProjectOne.Repository
         public bool InsertOrderHeader(OrderHeader orderHeader)
         {
             var returnValue = false;
-            IEnumerable<OrderHeader> orderHistory = GetOrderHistoryCustomer(orderHeader.CustomerID).Where(oh => (oh.OrderDate.AddHours(2) > DateTime.Now) && (oh.StoreID == orderHeader.StoreID));
-            if (orderHistory.Count() == 0)
-            {
-                _db.OrderHeader.Include(oh => oh.OrderDetail);
-                _db.Add(ManualMapper.ManMap(orderHeader));
-                _db.SaveChanges();
-                returnValue = true;
-            }
+            //IEnumerable<OrderHeader> orderHistory = GetOrderHistoryCustomer(orderHeader.CustomerID).Where(oh => (oh.OrderDate.AddHours(2) > DateTime.Now) && (oh.StoreID == orderHeader.StoreID));
+            //if (orderHistory.Count() >= 0)
+            //{
+            //_db.OrderHeader.Include(oh => oh.OrderDetail);
+            _db.Add(ManualMapper.ManMap(orderHeader));
+            _db.SaveChanges();
+            returnValue = true;
+            //}
             return returnValue;
         }
 
@@ -399,6 +398,66 @@ namespace ProjectOne.Repository
             return collectionModelCustomers;
         }
 
+        public bool VerifyCustomer(string firstname, string lastname, string password)
+        {
+            DA.Customer customer = _db.Customer.Where(c => c.FirstName.ToLower() == firstname && c.LastName.ToLower() == lastname && c.CustomerPassword == password).FirstOrDefault();
+            if (customer.CustomerId != null && customer.CustomerId != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
+        }
+
+        public Customer SearchCustomerByNameandPassword(string firstname, string lastname, string password)
+        {
+            // this miplementation does will break if there is no customer in databse wit the given specs.
+            // only use this after you have verified with VerifyCustomer()
+            DA.Customer customer = _db.Customer.Where(c => c.FirstName.ToLower() == firstname && c.LastName.ToLower() == lastname && c.CustomerPassword == password).FirstOrDefault();
+            Customer customer1 = ManualMapper.ManMap(customer);
+            return customer1;
+        }
+
+        public IEnumerable<string> GetProductNames()
+        {
+            List<Product> collectionProducts = GetProducts().ToList();
+            List<string> collectionProductNames = new List<string>();
+            for (int i = 1; i < collectionProducts.Count() + 1; i++)
+            {
+                collectionProductNames[i - 1] = collectionProducts[i - 1].ProductName;
+            }
+            return collectionProductNames;
+        }
+
+        public IEnumerable<string> GetAddressNames()
+        {
+            List<Address> collectionAddresses = GetAddresses().ToList();
+            List<string> collectionAddressNames = new List<string>();
+            for (int i = 1; i < collectionAddresses.Count() + 1; i++)
+            {
+                collectionAddressNames[i - 1] = collectionAddresses[i - 1].AddressLine1;
+            }
+            return collectionAddressNames;
+        }
+
+        public string GetStoreName(int orderID)
+        {
+            throw new NotImplementedException();
+            //OrderHeader orderHeader = GetOrderByOrderId(orderID);
+            //int storeID = orderHeader.StoreID;
+            //IEnumerable<Store> stores = GetStores();
+            //Store store = stores.Where(s => s.StoreID == storeID).FirstOrDefault();
+            //string storeName = store.name
+        }
+
+        public List<OrderDetail> GetOrderDetailByOrderHeaderID(int orderHeaderId)
+        {
+            OrderHeader orderHeader = GetOrderByOrderId(orderHeaderId);
+            List<OrderDetail> orderDetails = ManualMapper.ManMap(_db.OrderDetail.Where(od => od.OrderId == orderHeaderId)).ToList();
+            return orderDetails;
+        }
     }
 }
